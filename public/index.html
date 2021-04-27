@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://fonts.googleapis.com/css?family=Assistant:400,600,700&display=swap&subset=hebrew"
+        rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="dist/style.css">
+</head>
+
+<body onload="init()">
+    <div class="welcomLogin">
+        <div class="h1">כניסה</div>
+        <div style="max-width: 400px;margin: auto;text-align: right;">
+            <div style="font-size: revert;padding: 10px 0 0;">:הזן שם משתמש</div>
+            <input type="text" id="loginName" class="input" autocomplete="off">
+            <div style="font-size: revert;padding: 10px 0 0;">:הזן סיסמה</div>
+            <input type="password" id="loginPass" class="input" autocomplete="off">
+        </div>
+        <button id="submitlogin">אישור</button>
+        <div id="gifSearch" style="display: none;"><img style="width: 45px;" src="img/gifSearch.gif"></div>
+        <div class="meseggecardlogin"></div>
+    </div>
+
+    <script src="js.js"></script>
+</body>
+
+</html>
