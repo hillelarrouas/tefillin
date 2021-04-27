@@ -6,10 +6,40 @@ body {
   padding: 15px 10px;
   overscroll-behavior: contain;
   -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+  background: linear-gradient(154deg, #23d5ab5e, #23a5d57a);
+  width: 100%;
+  height: 100vh;
 }
 
-.welcomLogin {
+.menu {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  max-width: 550px;
+  background-color: white;
   margin: auto;
+  border-radius: 10px;
+  position: sticky;
+  overflow: hidden;
+  padding: 15px;
+  box-sizing: border-box;
+  top: 0;
+  z-index: 100;
+}
+.menu .menus {
+  cursor: pointer;
+  transition: all 0.3s;
+  padding: 5px 10px;
+  border-radius: 5px;
+  background: #f3f3f3;
+}
+.menu .menus:hover {
+  background: #aaebe2;
+  font-weight: 600;
+}
+
+.card {
+  margin: 10px auto;
   width: 100%;
   max-width: 550px;
   border-radius: 10px;
@@ -18,12 +48,15 @@ body {
   text-align: center;
   padding: 15px;
   box-sizing: border-box;
+  position: relative;
 }
-.welcomLogin .h1 {
+
+.h1 {
   font-size: x-large;
   font-weight: 600;
 }
-.welcomLogin .input {
+
+.input {
   width: 100%;
   padding: 10px;
   margin: 0px 0 8px;
@@ -35,7 +68,8 @@ body {
   text-align: center;
   direction: ltr;
 }
-.welcomLogin button {
+
+button {
   margin: auto;
   width: 60%;
   max-width: 150px;
@@ -49,12 +83,71 @@ body {
   transition: all 0.2s;
   font-size: medium;
 }
-.welcomLogin button:hover {
+button:hover {
   background: rgba(64, 224, 208, 0.815);
 }
-.welcomLogin .meseggecardlogin {
+
+.meseggecardlogin,
+.meseggeUserEdit, .meseggeadduser {
   color: indianred;
   padding: 5px 0 0;
   font-weight: 600;
   font-size: large;
+}
+
+.user {
+  width: 100%;
+  background-color: rgba(166, 231, 227, 0.5);
+  height: 60px;
+  border-radius: 5px;
+  margin: 15px 0 0;
+  font-size: x-large;
+  font-weight: 600;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  position: relative;
+}
+.user .imgadituser {
+  position: absolute;
+  width: 25px;
+  right: -10px;
+  top: -10px;
+  background-color: rgba(166, 231, 227, 0.5);
+  padding: 5px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+.user .pass {
+  color: transparent;
+  text-shadow: 0 0 9px rgba(0, 0, 0, 0.5);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.user .pass:hover {
+  text-shadow: none;
+  color: black;
+}
+
+@media only screen and (max-width: 450px) {
+  .user {
+    font-size: large;
+  }
+}
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px white;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c5c5c5;
+  border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #c5c5c5;
 }

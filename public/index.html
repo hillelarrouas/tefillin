@@ -12,19 +12,49 @@
     <link rel="stylesheet" href="dist/style.css">
 </head>
 
-<body onload="init()">
-    <div class="welcomLogin">
+<body dir="rtl" onload="init()">
+
+    <div class="menu"></div>
+
+    <div class="welcomLogin card" style="display: none;">
         <div class="h1">כניסה</div>
         <div style="max-width: 400px;margin: auto;text-align: right;">
-            <div style="font-size: revert;padding: 10px 0 0;">:הזן שם משתמש</div>
+            <div style="font-size: revert;padding: 10px 0 0;">הזן שם משתמש:</div>
             <input type="text" id="loginName" class="input" autocomplete="off">
-            <div style="font-size: revert;padding: 10px 0 0;">:הזן סיסמה</div>
+            <div style="font-size: revert;padding: 10px 0 0;">הזן סיסמה:</div>
             <input type="password" id="loginPass" class="input" autocomplete="off">
         </div>
         <button id="submitlogin">אישור</button>
         <div id="gifSearch" style="display: none;"><img style="width: 45px;" src="img/gifSearch.gif"></div>
         <div class="meseggecardlogin"></div>
     </div>
+
+    <div class="cardusers card" style="display: none;"></div>
+
+    <div class="UserEditing card" style="display: none;"></div>
+
+
+
+
+    <div class="adduser card" style="display: none;">
+        <div class="h1">הוספת משתמש</div>
+        <div style="max-width: 400px;margin: auto;text-align: right;">
+            <div style="font-size: revert;padding: 10px 0 0;">שם משתמש:</div>
+            <input type="text" id="addusername" class="input" autocomplete="off">
+            <div style="font-size: revert;padding: 10px 0 0;">סיסמה:</div>
+            <input type="text" id="adduserpass" class="input" autocomplete="off">
+            <div style="font-size: revert;padding: 10px 0 0;">סוג ניהול:</div>
+            <select id="addusertypePermission" class="input" style="direction: rtl;">
+                <option value="nonevalue" style="display: none;">בחר</option>
+                <option value="public">רגיל</option>
+                <option value="admin">מנהל</option>
+              </select>
+        </div>
+        <button id="addusersubmit" onclick="adduser()">אישור</button>
+        <div id="addusergif" style="display: none;"><img style="width: 45px;" src="img/gifSearch.gif"></div>
+        <div class="meseggeadduser"></div>
+    </div>
+
 
     <script src="js.js"></script>
 </body>
