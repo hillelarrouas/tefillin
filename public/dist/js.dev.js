@@ -88,7 +88,7 @@ function updatingcardusers(data) {
   var r = "<div class=\"h1\">\u05DE\u05E9\u05EA\u05DE\u05E9\u05D9\u05DD</div>";
   r += "<img src=\"img/addUser.png\"/ style=\"position: absolute;top: 8px;left: 11px;width: 45px; cursor: pointer;\" onclick=\"showcard('.adduser')\">";
   data.forEach(function (element) {
-    r += "<div class=\"user\">\n                <img src=\"img/edit-button.png\" class=\"imgadituser\" onclick=\"editingUser('".concat(element.id, "')\">\n                    <div class=\"name\" style=\"width: 33.333%;\">").concat(element.name, "</div>\n                    <div class=\"pass\" style=\"width: 33.333%;\">").concat(element.pass, "</div>\n                    <div class=\"name\" style=\"width: 33.333%;\">").concat(data.permission == "admin" ? "רגיל" : "מנהל", "</div>\n        </div>");
+    r += "<div class=\"user\">\n                <img src=\"img/edit-button.png\" class=\"imgadituser\" onclick=\"editingUser('".concat(element.id, "')\">\n                    <div class=\"name\" style=\"width: 33.333%;\">").concat(element.name, "</div>\n                    <div class=\"pass\" style=\"width: 33.333%;\">").concat(element.pass, "</div>\n                    <div class=\"name\" style=\"width: 33.333%;\">").concat(element.permission == "admin" ? "מנהל" : "רגיל", "</div>\n        </div>");
   });
   $(".cardusers").html(r);
 }
@@ -188,6 +188,8 @@ function adduser() {
     }).then(function (res) {
       return res.json();
     }).then(function (data) {
+      $("#addusername").val('');
+      $("#adduserpass").val('');
       $("#addusergif").hide();
       $("#addusersubmit").show();
       updatingcardusers(data);

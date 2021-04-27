@@ -103,7 +103,7 @@ function updatingcardusers(data) {
                 <img src="img/edit-button.png" class="imgadituser" onclick="editingUser('${element.id}')">
                     <div class="name" style="width: 33.333%;">${element.name}</div>
                     <div class="pass" style="width: 33.333%;">${element.pass}</div>
-                    <div class="name" style="width: 33.333%;">${data.permission == "admin" ? "רגיל" : "מנהל" }</div>
+                    <div class="name" style="width: 33.333%;">${element.permission == "admin" ? "מנהל" : "רגיל"}</div>
         </div>`
     })
     $(".cardusers").html(r)
@@ -134,7 +134,7 @@ function editingUser(iduser) {
                 <input type="text" id="UserEditingpass" class="input" autocomplete="off" value="${data.pass}">
                 <div style="font-size: revert;padding: 10px 0 0;">סוג ניהול:</div>
                 <select id="typePermission" class="input" style="direction: rtl;background: none;">
-                <option value="${data.permission}" style="display: none;">${data.permission == "admin" ? "מנהל" : "רגיל" }</option>
+                <option value="${data.permission}" style="display: none;">${data.permission == "admin" ? "מנהל" : "רגיל"}</option>
                 <option value="public">רגיל</option>
                 <option value="admin">מנהל</option>
               </select>
@@ -158,7 +158,7 @@ function UserEditingsubmit(iduser) {
     } else if (UserEditingpass.length == 0) {
         $(".meseggeUserEdit").html('הזן סיסמה')
         $("#UserEditingpass").focus();
-    }else {
+    } else {
         $("#UserEdit").show()
         $("#UserEditingsubmit").hide()
         $(".meseggeUserEdit").html('')
@@ -187,7 +187,7 @@ function UserEditingsubmit(iduser) {
 }
 
 
-function showcard(e){
+function showcard(e) {
     $(".card").hide()
     $(e).show()
 }
@@ -223,6 +223,8 @@ function adduser() {
             })
         }).then(res => res.json())
             .then(data => {
+                $("#addusername").val('')
+                $("#adduserpass").val('')
                 $("#addusergif").hide()
                 $("#addusersubmit").show()
                 updatingcardusers(data)
