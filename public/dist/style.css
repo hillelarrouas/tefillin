@@ -130,6 +130,10 @@ button:hover {
 }
 
 @media only screen and (max-width: 450px) {
+  html {
+    user-select: none;
+  }
+
   .user {
     font-size: large;
   }
