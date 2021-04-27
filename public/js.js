@@ -50,12 +50,11 @@ $("#submitlogin").click(function () {
 });
 
 
-
-
-
+$("#loginName,#loginPass").on('input', function (e) {
+    $(".meseggecardlogin").html('')
+})
 
 $("#loginName,#loginPass").on('keypress', function (e) {
-    $(".meseggecardlogin").html('')
     if (e.keyCode == 13) {
         $("#submitlogin").click()
     }
