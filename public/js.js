@@ -6,8 +6,7 @@ function init() {
                 $(".menu").show();
                 $(".menu").html(
                     `<div class="menus">דף הבית</div>
-                <div class="menus" onclick="getuser()">משתמשים</div>
-                <div class="menus" onclick="showcard('.adduser')">הוספת משתמש</div>`
+                <div class="menus" onclick="getuser()">משתמשים</div>`
                 );
 
             } else if (data.permission == 'public') {
@@ -98,6 +97,7 @@ function updatingcardusers(data) {
     showcard(".cardusers")
 
     let r = `<div class="h1">משתמשים</div>`
+    r += `<img src="img/addUser.png"/ style="position: absolute;top: 8px;left: 11px;width: 45px; cursor: pointer;" onclick="showcard('.adduser')">`
     data.forEach(element => {
         r += `<div class="user">
                 <img src="img/edit-button.png" class="imgadituser" onclick="editingUser('${element.id}')">
@@ -133,7 +133,7 @@ function editingUser(iduser) {
                 <div style="font-size: revert;padding: 10px 0 0;">סיסמה:</div>
                 <input type="text" id="UserEditingpass" class="input" autocomplete="off" value="${data.pass}">
                 <div style="font-size: revert;padding: 10px 0 0;">סוג ניהול:</div>
-                <select id="typePermission" class="input" style="direction: rtl;">
+                <select id="typePermission" class="input" style="direction: rtl;background: none;">
                 <option value="${data.permission}" style="display: none;">${data.permission == "admin" ? "מנהל" : "רגיל" }</option>
                 <option value="public">רגיל</option>
                 <option value="admin">מנהל</option>
