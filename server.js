@@ -15,7 +15,8 @@ app.use(express.static('public'))
 
 const detalogin = [
     { name: "hillel", pass: "123", permission: "admin", id: '5245' },
-    { name: "hillel", pass: "1234", permission: "admin", id: '9829' }
+    { name: "hillel", pass: "1234", permission: "admin", id: '9829' },
+    { name: "hillel", pass: "1255", permission: "public", id: '9829' }
 ]
 
 
@@ -91,22 +92,25 @@ app.get('/getUsers', async (req, res) => {
 
 
 
-app.post('/editingUser', (req, res) => {
-    try {
-        const { iduser } = req.body
-        const filterusers = detalogin.filter(ele => ele.id === iduser)[0];
-        res.send(filterusers)
-    }
-    catch (e) {
-        console.log(e)
-    }
-})
-
 app.post('/UserEdit', (req, res) => {
     try {
         const { iduser, UserEditingname, UserEditingpass, typePermission } = req.body
+       const d =  detalogin.filter(ele => ele.name === UserEditingname && ele.pass === UserEditingpass && ele.id === iduser)[0]; 
+           if (d){
+               console.log('ff')
+           }
+       //     console.log('החליף')
+
+            //     // break
+            // }
+            // else {
+            //     console.log('לא החליף')
+            // }
+        // })
         detalogin.filter(ele => {
             if (ele.id === iduser) {
+
+
                 ele.name = UserEditingname
                 ele.pass = UserEditingpass
                 ele.permission = typePermission
@@ -119,6 +123,8 @@ app.post('/UserEdit', (req, res) => {
     }
 })
 
+
+
 app.post('/addUser', (req, res) => {
     try {
         const { addusername, adduserpass, addusertypePermission } = req.body
@@ -128,8 +134,12 @@ app.post('/addUser', (req, res) => {
             const filterusers = detalogin.filter(ele => ele.name === jwtuser.filterusers.name && ele.pass === jwtuser.filterusers.pass)[0];
             if (filterusers) {
                 if (filterusers.permission == "admin") {
-                    detalogin.push({ name: addusername, pass: adduserpass, permission: addusertypePermission, id: `${Math.floor(Math.random()* 5485165187)}`})
-                    res.send(detalogin)
+                    if (detalogin.filter(ele => ele.name === addusername && ele.pass === adduserpass)[0]) {
+                        res.send({ user: false })
+                    } else {
+                        detalogin.push({ name: addusername, pass: adduserpass, permission: addusertypePermission, id: `${Math.floor(Math.random() * 5485165187)}` })
+                        res.send(detalogin)
+                    }
                 } else {
                     res.send(false)
                 }
@@ -148,6 +158,16 @@ app.post('/addUser', (req, res) => {
 })
 
 
+
+app.get('/resetCookie', (req, res) => {
+    try {
+        res.cookie('user', 'token', { maxAge: 0, httpOnly: true })
+        res.send(true)
+    }
+    catch (e) {
+        console.log(e)
+    }
+})
 
 
 const port = process.env.PORT || 3000;

@@ -6,10 +6,10 @@ function init() {
   }).then(function (data) {
     if (data.permission == 'admin') {
       $(".menu").show();
-      $(".menu").html("<div class=\"menus\">\u05D3\u05E3 \u05D4\u05D1\u05D9\u05EA</div>\n                <div class=\"menus\" onclick=\"getuser()\">\u05DE\u05E9\u05EA\u05DE\u05E9\u05D9\u05DD</div>");
+      $(".menu").html("<div class=\"menus\" onclick=\"Output()\">\u05D9\u05E6\u05D9\u05D0\u05D4</div>\n                    <div class=\"menus\">\u05D3\u05E3 \u05D4\u05D1\u05D9\u05EA</div>\n                <div class=\"menus\" onclick=\"getuser()\">\u05DE\u05E9\u05EA\u05DE\u05E9\u05D9\u05DD</div>");
     } else if (data.permission == 'public') {
       $(".menu").show();
-      $(".menu").html("<div class=\"menus\">\u05D3\u05E3 \u05D4\u05D1\u05D9\u05EA</div>");
+      $(".menu").html("<div class=\"menus\" onclick=\"Output()\">\u05D9\u05E6\u05D9\u05D0\u05D4</div>\n                    <div class=\"menus\">\u05D3\u05E3 \u05D4\u05D1\u05D9\u05EA</div>");
     } else {
       errorCookie();
     }
@@ -17,7 +17,10 @@ function init() {
 }
 
 function errorCookie() {
+  $("#loginName").val('');
+  $("#loginPass").val('');
   $(".menu").hide();
+  $(".card").hide();
   $(".welcomLogin").show();
 }
 
@@ -83,7 +86,10 @@ function getuser() {
   });
 }
 
+var arayaUsers;
+
 function updatingcardusers(data) {
+  arayaUsers = data;
   showcard(".cardusers");
   var r = "<div class=\"h1\">\u05DE\u05E9\u05EA\u05DE\u05E9\u05D9\u05DD</div>";
   r += "<img src=\"img/addUser.png\"/ style=\"position: absolute;top: 8px;left: 11px;width: 45px; cursor: pointer;\" onclick=\"showcard('.adduser')\">";
@@ -94,21 +100,12 @@ function updatingcardusers(data) {
 }
 
 function editingUser(iduser) {
-  fetch('/editingUser', {
-    method: 'post',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      iduser: iduser
-    })
-  }).then(function (res) {
-    return res.json();
-  }).then(function (data) {
-    $(".cardusers").hide();
-    $(".UserEditing").show();
-    $(".UserEditing").html("<div class=\"h1\">\u05E2\u05E8\u05D9\u05DB\u05EA \u05DE\u05E9\u05EA\u05DE\u05E9</div>\n            <img style=\"width: 45px;position: absolute;top: 10px;right: 10px;cursor: pointer;\" src=\"img/return.png\" onclick=\"getuser()\">\n            <div style=\"max-width: 400px;margin: auto;text-align: right;\">\n                <div style=\"font-size: revert;padding: 10px 0 0;\">\u05E9\u05DD \u05DE\u05E9\u05EA\u05DE\u05E9:</div>\n                <input type=\"text\" id=\"UserEditingname\" class=\"input\" autocomplete=\"off\" value=\"".concat(data.name, "\">\n                <div style=\"font-size: revert;padding: 10px 0 0;\">\u05E1\u05D9\u05E1\u05DE\u05D4:</div>\n                <input type=\"text\" id=\"UserEditingpass\" class=\"input\" autocomplete=\"off\" value=\"").concat(data.pass, "\">\n                <div style=\"font-size: revert;padding: 10px 0 0;\">\u05E1\u05D5\u05D2 \u05E0\u05D9\u05D4\u05D5\u05DC:</div>\n                <select id=\"typePermission\" class=\"input\" style=\"direction: rtl;background: none;\">\n                <option value=\"").concat(data.permission, "\" style=\"display: none;\">").concat(data.permission == "admin" ? "מנהל" : "רגיל", "</option>\n                <option value=\"public\">\u05E8\u05D2\u05D9\u05DC</option>\n                <option value=\"admin\">\u05DE\u05E0\u05D4\u05DC</option>\n              </select>\n            </div>\n            <button id=\"UserEditingsubmit\" onclick=\"UserEditingsubmit('").concat(data.id, "')\">\u05D0\u05D9\u05E9\u05D5\u05E8</button>\n            <div id=\"UserEdit\" style=\"display: none;\"><img style=\"width: 45px;\" src=\"img/gifSearch.gif\"></div>\n            <div class=\"meseggeUserEdit\"></div>"));
-  });
+  var filterarayaUsers = arayaUsers.filter(function (ele) {
+    return ele.id === iduser;
+  })[0];
+  $(".cardusers").hide();
+  $(".UserEditing").show();
+  $(".UserEditing").html("<div class=\"h1\">\u05E2\u05E8\u05D9\u05DB\u05EA \u05DE\u05E9\u05EA\u05DE\u05E9</div>\n            <img style=\"width: 35px;position: absolute;top: 10px;right: 10px;cursor: pointer;\" src=\"img/return.png\" onclick=\"getuser()\">\n            <div style=\"max-width: 400px;margin: auto;text-align: right;\">\n                <div style=\"font-size: revert;padding: 10px 0 0;\">\u05E9\u05DD \u05DE\u05E9\u05EA\u05DE\u05E9:</div>\n                <input type=\"text\" id=\"UserEditingname\" class=\"input\" autocomplete=\"off\" value=\"".concat(filterarayaUsers.name, "\">\n                <div style=\"font-size: revert;padding: 10px 0 0;\">\u05E1\u05D9\u05E1\u05DE\u05D4:</div>\n                <input type=\"text\" id=\"UserEditingpass\" class=\"input\" autocomplete=\"off\" value=\"").concat(filterarayaUsers.pass, "\">\n                <div style=\"font-size: revert;padding: 10px 0 0;\">\u05E1\u05D5\u05D2 \u05E0\u05D9\u05D4\u05D5\u05DC:</div>\n                <select id=\"typePermission\" class=\"input\" style=\"direction: rtl;background: none;\">\n                <option value=\"").concat(filterarayaUsers.permission, "\" style=\"display: none;\">").concat(filterarayaUsers.permission == "admin" ? "מנהל" : "רגיל", "</option>\n                <option value=\"public\">\u05E8\u05D2\u05D9\u05DC</option>\n                <option value=\"admin\">\u05DE\u05E0\u05D4\u05DC</option>\n              </select>\n            </div>\n            <button id=\"UserEditingsubmit\" onclick=\"UserEditingsubmit('").concat(filterarayaUsers.id, "')\">\u05D0\u05D9\u05E9\u05D5\u05E8</button>\n            <div id=\"UserEdit\" style=\"display: none;\"><img style=\"width: 45px;\" src=\"img/gifSearch.gif\"></div>\n            <div class=\"meseggeUserEdit\"></div>"));
 }
 
 function UserEditingsubmit(iduser) {
@@ -161,7 +158,6 @@ function adduser() {
   var addusername = $("#addusername").val();
   var adduserpass = $("#adduserpass").val();
   var addusertypePermission = $("#addusertypePermission").val();
-  console.log(addusertypePermission);
 
   if (addusername.length == 0) {
     $(".meseggeadduser").html('הזן שם משתמש');
@@ -188,17 +184,32 @@ function adduser() {
     }).then(function (res) {
       return res.json();
     }).then(function (data) {
-      $("#addusername").val('');
-      $("#adduserpass").val('');
       $("#addusergif").hide();
       $("#addusersubmit").show();
-      updatingcardusers(data);
-      console.log(data);
+
+      if (data.user == false) {
+        $(".meseggeadduser").html('קיים חשבון עם שם משתמש וסיסמה אלה');
+      } else if (data) {
+        $("#addusername").val('');
+        $("#adduserpass").val('');
+        updatingcardusers(data);
+      }
     })["catch"](function (err) {
+      console.log(err);
       setTimeout(function () {
         $("#addusergif").hide();
         $(".meseggeadduser").html('<div>שגיאת שרת</br><span onclick="location.reload()" style="text-decoration: underline;font-weight: 800; cursor: pointer;">לחץ כאן</span> כדי לנסות שוב</div>');
       }, 1000);
     });
   }
+}
+
+function Output() {
+  fetch('/resetCookie').then(function (res) {
+    return res.json();
+  }).then(function (data) {
+    if (data) {
+      errorCookie();
+    }
+  });
 }

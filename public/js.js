@@ -5,14 +5,16 @@ function init() {
             if (data.permission == 'admin') {
                 $(".menu").show();
                 $(".menu").html(
-                    `<div class="menus">דף הבית</div>
+                    `<div class="menus" onclick="Output()">יציאה</div>
+                    <div class="menus">דף הבית</div>
                 <div class="menus" onclick="getuser()">משתמשים</div>`
                 );
 
             } else if (data.permission == 'public') {
                 $(".menu").show();
                 $(".menu").html(
-                    `<div class="menus">דף הבית</div>`
+                    `<div class="menus" onclick="Output()">יציאה</div>
+                    <div class="menus">דף הבית</div>`
                 );
             }
             else {
@@ -22,7 +24,10 @@ function init() {
 }
 
 function errorCookie() {
+    $("#loginName").val('')
+    $("#loginPass").val('')
     $(".menu").hide();
+    $(".card").hide();
     $(".welcomLogin").show();
 }
 
@@ -92,8 +97,9 @@ function getuser() {
         })
 }
 
-
+let arayaUsers;
 function updatingcardusers(data) {
+    arayaUsers = data
     showcard(".cardusers")
 
     let r = `<div class="h1">משתמשים</div>`
@@ -112,38 +118,28 @@ function updatingcardusers(data) {
 
 
 function editingUser(iduser) {
-    fetch('/editingUser', {
-        method: 'post',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            iduser
-        })
-    }).then(res => res.json())
-        .then(data => {
-            $(".cardusers").hide()
-            $(".UserEditing").show()
-            $(".UserEditing").html(
-                `<div class="h1">עריכת משתמש</div>
-            <img style="width: 45px;position: absolute;top: 10px;right: 10px;cursor: pointer;" src="img/return.png" onclick="getuser()">
+    const filterarayaUsers = arayaUsers.filter(ele => ele.id === iduser)[0];
+    $(".cardusers").hide()
+    $(".UserEditing").show()
+    $(".UserEditing").html(
+        `<div class="h1">עריכת משתמש</div>
+            <img style="width: 35px;position: absolute;top: 10px;right: 10px;cursor: pointer;" src="img/return.png" onclick="getuser()">
             <div style="max-width: 400px;margin: auto;text-align: right;">
                 <div style="font-size: revert;padding: 10px 0 0;">שם משתמש:</div>
-                <input type="text" id="UserEditingname" class="input" autocomplete="off" value="${data.name}">
+                <input type="text" id="UserEditingname" class="input" autocomplete="off" value="${filterarayaUsers.name}">
                 <div style="font-size: revert;padding: 10px 0 0;">סיסמה:</div>
-                <input type="text" id="UserEditingpass" class="input" autocomplete="off" value="${data.pass}">
+                <input type="text" id="UserEditingpass" class="input" autocomplete="off" value="${filterarayaUsers.pass}">
                 <div style="font-size: revert;padding: 10px 0 0;">סוג ניהול:</div>
                 <select id="typePermission" class="input" style="direction: rtl;background: none;">
-                <option value="${data.permission}" style="display: none;">${data.permission == "admin" ? "מנהל" : "רגיל"}</option>
+                <option value="${filterarayaUsers.permission}" style="display: none;">${filterarayaUsers.permission == "admin" ? "מנהל" : "רגיל"}</option>
                 <option value="public">רגיל</option>
                 <option value="admin">מנהל</option>
               </select>
             </div>
-            <button id="UserEditingsubmit" onclick="UserEditingsubmit('${data.id}')">אישור</button>
+            <button id="UserEditingsubmit" onclick="UserEditingsubmit('${filterarayaUsers.id}')">אישור</button>
             <div id="UserEdit" style="display: none;"><img style="width: 45px;" src="img/gifSearch.gif"></div>
             <div class="meseggeUserEdit"></div>`
-            )
-        })
+    )
 }
 
 
@@ -198,7 +194,6 @@ function adduser() {
     let addusername = $("#addusername").val()
     let adduserpass = $("#adduserpass").val()
     let addusertypePermission = $("#addusertypePermission").val()
-    console.log(addusertypePermission)
 
     if (addusername.length == 0) {
         $(".meseggeadduser").html('הזן שם משתמש')
@@ -223,18 +218,34 @@ function adduser() {
             })
         }).then(res => res.json())
             .then(data => {
-                $("#addusername").val('')
-                $("#adduserpass").val('')
                 $("#addusergif").hide()
                 $("#addusersubmit").show()
-                updatingcardusers(data)
-                console.log(data)
+                if (data.user == false) {
+                    $(".meseggeadduser").html('קיים חשבון עם שם משתמש וסיסמה אלה')
+                }
+                else if (data) {
+                    $("#addusername").val('')
+                    $("#adduserpass").val('')
+                    updatingcardusers(data)
+                }
             })
             .catch(err => {
+                console.log(err)
                 setTimeout(function () {
                     $("#addusergif").hide()
                     $(".meseggeadduser").html('<div>שגיאת שרת</br><span onclick="location.reload()" style="text-decoration: underline;font-weight: 800; cursor: pointer;">לחץ כאן</span> כדי לנסות שוב</div>')
                 }, 1000);
             })
     }
+}
+
+
+function Output() {
+    fetch('/resetCookie')
+        .then(res => res.json())
+        .then(data => {
+            if (data) {
+                errorCookie()
+            }
+        })
 }

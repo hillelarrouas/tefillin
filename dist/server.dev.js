@@ -29,6 +29,11 @@ var detalogin = [{
   pass: "1234",
   permission: "admin",
   id: '9829'
+}, {
+  name: "hillel",
+  pass: "1255",
+  permission: "public",
+  id: '9829'
 }];
 app.get('/testCookie', function (req, res) {
   try {
@@ -119,17 +124,6 @@ app.get('/getUsers', function _callee(req, res) {
     }
   });
 });
-app.post('/editingUser', function (req, res) {
-  try {
-    var iduser = req.body.iduser;
-    var filterusers = detalogin.filter(function (ele) {
-      return ele.id === iduser;
-    })[0];
-    res.send(filterusers);
-  } catch (e) {
-    console.log(e);
-  }
-});
 app.post('/UserEdit', function (req, res) {
   try {
     var _req$body2 = req.body,
@@ -137,6 +131,21 @@ app.post('/UserEdit', function (req, res) {
         UserEditingname = _req$body2.UserEditingname,
         UserEditingpass = _req$body2.UserEditingpass,
         typePermission = _req$body2.typePermission;
+    var d = detalogin.filter(function (ele) {
+      return ele.name === UserEditingname && ele.pass === UserEditingpass && ele.id === iduser;
+    })[0];
+
+    if (d) {
+      console.log('ff');
+    } //     console.log('החליף')
+    //     // break
+    // }
+    // else {
+    //     console.log('לא החליף')
+    // }
+    // })
+
+
     detalogin.filter(function (ele) {
       if (ele.id === iduser) {
         ele.name = UserEditingname;
@@ -165,13 +174,21 @@ app.post('/addUser', function (req, res) {
 
       if (filterusers) {
         if (filterusers.permission == "admin") {
-          detalogin.push({
-            name: addusername,
-            pass: adduserpass,
-            permission: addusertypePermission,
-            id: "".concat(Math.floor(Math.random() * 5485165187))
-          });
-          res.send(detalogin);
+          if (detalogin.filter(function (ele) {
+            return ele.name === addusername && ele.pass === adduserpass;
+          })[0]) {
+            res.send({
+              user: false
+            });
+          } else {
+            detalogin.push({
+              name: addusername,
+              pass: adduserpass,
+              permission: addusertypePermission,
+              id: "".concat(Math.floor(Math.random() * 5485165187))
+            });
+            res.send(detalogin);
+          }
         } else {
           res.send(false);
         }
@@ -181,6 +198,17 @@ app.post('/addUser', function (req, res) {
     } else {
       res.send(false);
     }
+  } catch (e) {
+    console.log(e);
+  }
+});
+app.get('/resetCookie', function (req, res) {
+  try {
+    res.cookie('user', 'token', {
+      maxAge: 0,
+      httpOnly: true
+    });
+    res.send(true);
   } catch (e) {
     console.log(e);
   }

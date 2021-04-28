@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <meta name="theme-color" content="#d2f3f1" />
-    <title>תפילין</title>
+    <title>ניהול</title>
     <link href="https://fonts.googleapis.com/css?family=Assistant:400,600,700&display=swap&subset=hebrew"
         rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -14,9 +14,7 @@
 </head>
 
 <body dir="rtl" onload="init()">
-
     <div class="menu"></div>
-
     <div class="welcomLogin card" style="display: none;">
         <div class="h1">כניסה</div>
         <div style="max-width: 400px;margin: auto;text-align: right;">
@@ -31,15 +29,12 @@
     </div>
 
     <div class="cardusers card" style="display: none;"></div>
-
     <div class="UserEditing card" style="display: none;"></div>
-
-
 
 
     <div class="adduser card" style="display: none;">
         <div class="h1">הוספת משתמש</div>
-        <img style="width: 45px;position: absolute;top: 10px;right: 10px;cursor: pointer;" src="img/return.png" onclick="getuser()">
+        <img style="width: 35px;position: absolute;top: 10px;right: 10px;cursor: pointer;" src="img/return.png" onclick="getuser()">
         <div style="max-width: 400px;margin: auto;text-align: right;">
             <div style="font-size: revert;padding: 10px 0 0;">שם משתמש:</div>
             <input type="text" id="addusername" class="input" autocomplete="off">
